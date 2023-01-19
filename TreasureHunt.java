@@ -1,88 +1,59 @@
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 
+static class TreasureHunt {
+        boolean[][] treasure = new boolean[3][3];
+        boolean[][] board = new boolean[3][3];
+        boolean gameOver = false;
+        int userLives = 3;
+        int userPoints = 0;
 
-public class TreasureHunt{
-
-  public static void main(String args[]){
-    boolean[][] treasure = new boolean[9][9];
-    boolean[][] board = new boolean[9][9];
-    boolean gameOver = false;
-    int row = 0;
-    int column = 0;
-    int userLives = 3;
-    int userPoints = 0;
-    Scanner scan = new Scanner(System.in);
-
-    for(int i = 0; i < 3; i++){
-      for(int j = 0; j < 3; j++){
-        treasure[i][j] = false;
-      }
-    }
-    treasure[0][0] = true;
-    treasure[1][1] = true;
-    treasure[2][2] = true;
-
-    for (int i = 0; i < 3; i++){
-      System.out.println();
-      for(int j = 0; j < 3; j++){
-        System.out.print(" ? ");
-      }
-    }
-
-    while(gameOver == false){
-      System.out.println();
-      System.out.println("which row");
-      row = scan.nextInt();
-      System.out.println("Which Column");
-      column = scan.nextInt();
-
-      board[row][column] = true;
-      updateBoard(board, treasure);
-
-      if(treasure[row][column]){
-        userPoints += 1;
-      }
-      if(userPoints == 3){
-        System.out.println();
-        System.out.println("All treasure found!!!");
-        gameOver = true; //end game
-      }
-      if(treasure[row][column] == false){
-        userLives -= 1;
-      }
-      if(userLives == 0){
-        System.out.println();
-        System.out.println("Game Over Out Of Lives");
-        gameOver = true;
-      }
-      System.out.println();
-      System.out.println("Points: " + userPoints);
-      System.out.println("Lives Left: " + userLives);
-
-    }
-
-  }
-
-  public static void updateBoard(boolean[][] updBoard, boolean[][]treasure){
-
-    //clear consle
-    System.out.print('\u000C');
-
-    for(int i = 0; i < 3; i++){
-      System.out.println();
-      for(int j = 0; j < 3; j++){
-        if(updBoard[i][j] == true && treasure[i][j] == true){
-          System.out.print(" X ");
+        public TreasureHunt() {
         }
-        else if(updBoard[i][j] == true && treasure[i][j] == false){
-          System.out.print(" O ");
+
+        public void init() {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    treasure[i][j] = false;
+                    board[i][j] = false;
+                }
+            }
+            treasure[0][0] = true;
+            treasure[1][1] = true;
+            treasure[2][2] = true;
         }
-        else{
-          System.out.print(" ? ");
+
+        public void checkTreasure(int row, int column) {
+            board[row][column] = true;
+            if (treasure[row][column]) {
+                userPoints += 1;
+            } else {
+                userLives -= 1;
+            }
+            if (userPoints == 3) {
+                JOptionPane.showMessageDialog(null, "All treasure found!!!");
+                gameOver = true;
+            }
+            if (userLives == 0) {
+                JOptionPane.showMessageDialog(null, "Game Over Out Of Lives");
+                gameOver = true;
+            }
         }
-      }
     }
-  }
-
-
-}

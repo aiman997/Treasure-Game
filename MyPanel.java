@@ -14,7 +14,7 @@ static class MyPanel extends JPanel {
         JLabel pointsLabel, livesLabel;
 
         public MyPanel(TreasureHunt game) {
-            this.game = game
+            this.game = game;
             setPreferredSize(new Dimension(300, 300));
             setLayout(new GridLayout(3, 3));
             for (int i = 0; i < 3; i++) {
